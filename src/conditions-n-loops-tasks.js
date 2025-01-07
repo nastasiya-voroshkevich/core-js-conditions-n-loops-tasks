@@ -218,8 +218,58 @@ function convertToRomanNumerals(num) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case '0':
+        result += ' zero';
+        break;
+      case '1':
+        result += ' one';
+        break;
+      case '2':
+        result += ' two';
+        break;
+      case '3':
+        result += ' three';
+        break;
+      case '4':
+        result += ' four';
+        break;
+      case '5':
+        result += ' five';
+        break;
+      case '6':
+        result += ' six';
+        break;
+      case '7':
+        result += ' seven';
+        break;
+      case '8':
+        result += ' eight';
+        break;
+      case '9':
+        result += ' nine';
+        break;
+      case ',':
+      case '.':
+        result += ' point';
+        break;
+      case '-':
+        result += ' minus';
+        break;
+      default:
+        break;
+    }
+  }
+
+  let newResult = '';
+  for (let i = 1; i < result.length; i += 1) {
+    newResult += result[i];
+  }
+  return newResult;
 }
 
 /**
@@ -343,8 +393,39 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const results = [];
+  for (let i = 0; i < size; i += 1) {
+    results[i] = [];
+  }
+  let counter = 1;
+  let startColumn = 0;
+  let endColumn = size - 1;
+  let startRow = 0;
+  let endRow = size - 1;
+  while (startColumn <= endColumn && startRow <= endRow) {
+    for (let i = startColumn; i <= endColumn; i += 1) {
+      results[startRow][i] = counter;
+      counter += 1;
+    }
+    startRow += 1;
+    for (let i = startRow; i <= endRow; i += 1) {
+      results[i][endColumn] = counter;
+      counter += 1;
+    }
+    endColumn -= 1;
+    for (let i = endColumn; i >= startColumn; i -= 1) {
+      results[endRow][i] = counter;
+      counter += 1;
+    }
+    endRow -= 1;
+    for (let i = endRow; i >= startRow; i -= 1) {
+      results[i][startColumn] = counter;
+      counter += 1;
+    }
+    startColumn += 1;
+  }
+  return results;
 }
 
 /**
@@ -411,8 +492,26 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let newStr = str;
+  let strOdd = '';
+  let strEven = '';
+  for (let i = 0; i < iterations; i += 1) {
+    for (let j = 0; j < str.length; j += 1) {
+      if (j % 2 === 0) {
+        strEven += newStr[j];
+      } else {
+        strOdd += newStr[j];
+      }
+    }
+    newStr = strEven + strOdd;
+    if (str === newStr) {
+      return shuffleChar(str, iterations % (i + 1));
+    }
+    strEven = '';
+    strOdd = '';
+  }
+  return newStr;
 }
 
 /**
